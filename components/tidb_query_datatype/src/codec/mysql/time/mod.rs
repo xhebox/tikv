@@ -691,7 +691,10 @@ mod parser {
                 let whole_time = parse_from_i64(ctx, result, time_type, fsp)?;
                 if whole_time.is_zero() {
                     // Should handle zero properly to match TiDB behaviors.
-                    return handle_zero_date(ctx, TimeArgs::zero(fsp as i8, time_type)).ok()??;
+                    return match handle_zero_date(ctx, TimeArgs::zero(fsp as i8, time_type)) {
+                        Ok(Some(args)) => Time::new(ctx, args).ok(),
+                        _ => None,
+                    };
                 }
                 let mut whole = [
                     whole_time.get_year(),
