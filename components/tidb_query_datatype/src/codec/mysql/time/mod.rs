@@ -3131,8 +3131,13 @@ mod tests {
     fn test_parse_from_real_zero_date() {
         let mut ctx = EvalContext::default();
         for input in ["0", "0.0", "0.000"] {
-            let actual =
-                parser::parse_from_float_string(&mut ctx, input.to_string(), TimeType::DateTime, 0, true);
+            let actual = parser::parse_from_float_string(
+                &mut ctx,
+                input.to_string(),
+                TimeType::DateTime,
+                0,
+                true,
+            );
             assert!(actual.is_some());
             assert_eq!(actual.unwrap().to_string(), "0000-00-00 00:00:00");
         }
@@ -3143,8 +3148,13 @@ mod tests {
             ..TimeEnv::default()
         });
         for input in ["0", "0.0", "0.000"] {
-            let actual =
-                parser::parse_from_float_string(&mut ctx, input.to_string(), TimeType::DateTime, 0, true);
+            let actual = parser::parse_from_float_string(
+                &mut ctx,
+                input.to_string(),
+                TimeType::DateTime,
+                0,
+                true,
+            );
             assert!(actual.is_none());
         }
     }
